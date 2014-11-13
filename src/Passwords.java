@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -31,13 +33,15 @@ public class Passwords {
 
 	private static void parse_input(Scanner sc) {
 		while(sc.hasNextLine()){
-			String line = sc.nextLine().replaceAll("[^A-Za-z]+", "");
-			Scanner l = new Scanner(line);
-			while(l.hasNext()){
-				String t = l.next().toLowerCase();
-				System.out.print(t);
+			String[] line = sc.nextLine().replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+			for (String e: line){
+				for (int i = 0; i < e.length(); i++){
+					char x = e.charAt(i);
+					int index = Math.abs(('z'-x) - 25);
+					System.out.println(index);
+				}
+				System.out.println();
 			}
-			System.out.println();
 		}
 	}
 
