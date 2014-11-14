@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
-
 
 public class Passwords {
 
@@ -60,7 +57,7 @@ public class Passwords {
 				if(hex)
 					System.out.print(Integer.toHexString(j) + " ");
 				else
-					System.out.print(j + " ");
+					System.out.format("%4s", j + " ");
 			}
 			System.out.println();
 		}
