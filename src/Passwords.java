@@ -30,7 +30,7 @@ public class Passwords {
 		parse_input(sc);
 	
 	}
-
+	
 	private static void parse_input(Scanner sc) {
 		while(sc.hasNextLine()){
 			String[] line = sc.nextLine().replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
