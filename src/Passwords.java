@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,6 +11,8 @@ public class Passwords {
 	protected static int[][] letter_grid;
 	protected static int[] STARTERS;
 	protected static int[] COUNTS;
+	protected static int total_num_letters;
+	protected static int num_starters;
 	
 	public static void main(String[] args) {
 		if(args.length != 3){
@@ -34,8 +37,21 @@ public class Passwords {
 //		print_array(letter_grid, false);
 		Random t = new Random(9001);
 		Random r = new Random(t.nextLong());
+//		Random r = new Random();
 		
-		while(num_passwords > 0){
+//		for(int i = 0; i < STARTERS.length; i++)
+//			System.out.println(STARTERS[i]);
+//		System.out.println(num_starters);
+		
+		while(num_passwords-- > 0){
+			ArrayList<Integer> password = new ArrayList<Integer>();
+			int start_letter_index = get_letter(r, STARTERS, num_starters);
+			int word_length = password_length - 1;
+			password.add(start_letter_index);
+			
+			while(word_length-- > 0){
+				
+			}
 			
 		}
 		
@@ -44,7 +60,17 @@ public class Passwords {
 		
 		
 		
-		
+	}
+
+	private static int get_letter(Random r, int[] array, int total_letters) {
+		int num = r.nextInt(total_letters);
+		int subtotal = 0;
+		for(int i = 0; i < array.length; i++){
+			subtotal += array[i];
+			if(subtotal >= num)
+				return i;
+		}
+		return -1;
 	}
 
 	private static void parse_input(Scanner sc) {
@@ -54,8 +80,9 @@ public class Passwords {
 				for (int i = 0; i < e.length(); i++){
 					char x = e.charAt(i);
 					int index = Math.abs(('z'-x) - 25);
-					if(i == 0) STARTERS[index]++;
+					if(i == 0){ STARTERS[index]++; num_starters++; }
 					if(i != (e.length()-1)) update_table(e, index, i);
+					total_num_letters++;
 				}
 			}
 		}
@@ -63,7 +90,7 @@ public class Passwords {
 
 	private static void update_table(String e, int index, int i) {
 		COUNTS[index]++;
-		letter_grid[Math.abs(('z' - e.charAt(i+1)) - 25)][index]++;
+		letter_grid[index][Math.abs(('z' - e.charAt(i+1)) - 25)]++;
 	}
 
 	static void print_array(int[][] a, boolean hex){
