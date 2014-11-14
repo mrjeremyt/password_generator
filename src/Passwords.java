@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Passwords {
@@ -27,9 +28,23 @@ public class Passwords {
 			e.printStackTrace();
 		}
 		
+		if(num_passwords == 0){ System.out.println("Enter a larger number for amount of passwords to generate."); System.exit(-1);}
+		
 		parse_input(sc);
-		print_array(letter_grid, false);
-	
+//		print_array(letter_grid, false);
+		Random t = new Random(9001);
+		Random r = new Random(t.nextLong());
+		
+		while(num_passwords > 0){
+			
+		}
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	private static void parse_input(Scanner sc) {
