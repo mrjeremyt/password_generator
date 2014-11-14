@@ -22,12 +22,16 @@ public class Passwords {
 			sc = new Scanner(new File(args[0].split("-")[1]));
 			num_passwords = Integer.parseInt(args[1]);
 			password_length = Integer.parseInt(args[2]);
+			STARTERS = new int[26];
+			COUNTS = new int[26];
+			letter_grid = new int[26][26];
 		} catch (FileNotFoundException e) {
 			System.out.println("wasn't able to open the reference text");
 			e.printStackTrace();
 		}
 		
 		parse_input(sc);
+		print_array(letter_grid, false);
 	
 	}
 
@@ -38,11 +42,28 @@ public class Passwords {
 				for (int i = 0; i < e.length(); i++){
 					char x = e.charAt(i);
 					int index = Math.abs(('z'-x) - 25);
-					System.out.println(index);
+					if(i == 0) STARTERS[index]++;
+					if(i != (e.length()-1)) update_table(e, index, i);
 				}
-				System.out.println();
 			}
 		}
 	}
 
+	private static void update_table(String e, int index, int i) {
+		COUNTS[index]++;
+		letter_grid[Math.abs(('z' - e.charAt(i+1)) - 25)][index]++;
+	}
+
+	static void print_array(int[][] a, boolean hex){
+		for(int[] i: a){
+			for(int j: i){
+				if(hex)
+					System.out.print(Integer.toHexString(j) + " ");
+				else
+					System.out.print(j + " ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
 }
