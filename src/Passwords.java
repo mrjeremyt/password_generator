@@ -62,7 +62,7 @@ public class Passwords {
 			try {
 				System.out.println(new String(out.toByteArray(), "UTF-8"));
 			} catch (UnsupportedEncodingException e) {
-				System.out.println("Something ");
+				System.out.println("Something wicked this way comes.");
 				e.printStackTrace();
 			}
 		}
