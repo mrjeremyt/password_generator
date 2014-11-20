@@ -3,9 +3,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
+import org.ardverk.collection.PatriciaTrie;
 
 public class Passwords {
 
@@ -45,7 +45,7 @@ public class Passwords {
 //		for(int i = 0; i < STARTERS.length; i++)
 //			System.out.println(STARTERS[i]);
 //		System.out.println(num_starters);
-		
+		PatriciaTrie<K, V> test = new PatriciaTrie<K, V>();
 		while(num_passwords-- > 0){
 			ArrayList<Byte> password = new ArrayList<Byte>();
 			byte start_letter_index = get_letter(r, STARTERS, num_starters);
