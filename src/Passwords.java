@@ -79,16 +79,17 @@ public class Passwords {
 		}
 		
 		
-		process_dict();
+		process_dict(dict);
+		if(custom_file) process_dict(f);
 	}
 	
 	private static void parse_password(String p){
 		
 	}
 
-	private static void process_dict() {
+	private static void process_dict(File thing) {
 		try {
-			Scanner testing = new Scanner(dict);
+			Scanner testing = new Scanner(thing);
 			while(testing.hasNext()){
 				the_file.add(testing.next().split("[^a-zA-Z ]")[0].toLowerCase());
 			}
