@@ -69,7 +69,9 @@ public class Passwords {
 				out.write(b + 97);
 			}
 			try {
-				System.out.println(new String(out.toByteArray(), "UTF-8"));
+				String thoughshallnotpass = new String(out.toByteArray(), "UTF-8");
+				parse_password(thoughshallnotpass);
+				System.out.println(thoughshallnotpass);
 			} catch (UnsupportedEncodingException e) {
 				System.out.println("Something wicked this way comes.");
 				e.printStackTrace();
@@ -78,6 +80,10 @@ public class Passwords {
 		
 		
 		process_dict();
+	}
+	
+	private static void parse_password(String p){
+		
 	}
 
 	private static void process_dict() {
