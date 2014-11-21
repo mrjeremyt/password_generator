@@ -8,9 +8,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class Passwords {
 
@@ -25,6 +22,7 @@ public class Passwords {
 	protected static File f;
 	protected static boolean custom_file;
 	protected static LinkedHashSet<String> the_file;
+	protected static ArrayList<String> bad_password;
 	
 	public static void main(String[] args) {
 		if(args.length == 4){ custom_file = true; } else{ custom_file = false;}
@@ -43,6 +41,7 @@ public class Passwords {
 			the_file = new LinkedHashSet<String>();
 			if(custom_file)
 				f = new File(args[3]);
+			bad_password = new ArrayList<String>();
 		} catch (Exception e) {
 			System.out.println("An error occured, please try again.");
 			e.printStackTrace();
@@ -54,6 +53,8 @@ public class Passwords {
 		parse_input(sc);
 		print_array(letter_grid, false);
 		Random r = new Random();
+		process_dict(dict);
+		if(custom_file) process_dict(f);
 		
 		System.out.println("Passwords are: ");
 		while(num_passwords-- > 0){
@@ -70,8 +71,10 @@ public class Passwords {
 			}
 			try {
 				String thoughshallnotpass = new String(out.toByteArray(), "UTF-8");
-				parse_password(thoughshallnotpass);
-				System.out.println(thoughshallnotpass);
+				if (password_length > 3)
+					parse_password(thoughshallnotpass);
+				else
+					System.out.println(thoughshallnotpass);					
 			} catch (UnsupportedEncodingException e) {
 				System.out.println("Something wicked this way comes.");
 				e.printStackTrace();
@@ -79,12 +82,29 @@ public class Passwords {
 		}
 		
 		
-		process_dict(dict);
-		if(custom_file) process_dict(f);
+		System.out.println("\n" + bad_password.size() + " Bad Passwords: ");
+		if(bad_password.size() > 0){
+			Iterator<String> it = bad_password.iterator();
+			while (it.hasNext()) System.out.println(it.next());
+		}else{
+			System.out.println("None found");
+		}
 	}
 	
 	private static void parse_password(String p){
-		
+		int length = p.length();
+		for(int c = 0 ; c <= length-4 ; c++ )
+		{
+			for(int i = c+4 ; i < length+1; i++ )
+			{
+				String sub = p.substring(c, i);
+				if (the_file.contains(sub)){
+					bad_password.add("Bad password: " + p + ", Substring is: " + sub);
+					return;
+				}
+			}
+		}
+		System.out.println(p);
 	}
 
 	private static void process_dict(File thing) {
@@ -136,7 +156,7 @@ public class Passwords {
 				if(hex)
 					System.out.print(Integer.toHexString(j) + " ");
 				else
-					System.out.format("%5s", j + " ");
+					System.out.format("%7s", j + " ");
 			}
 			System.out.println();
 		}

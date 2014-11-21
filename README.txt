@@ -39,13 +39,16 @@ java Passwords reference-test_input.txt 7 8
 [Output of test 1]
 
 Passwords are: 
-adshotho
-hebicare
-aiaweres
-sunsonda
-watriech
-theidand
-dedimeny
+momorist
+gitoosth
+qupthuke
+
+4 Bad Passwords: 
+Bad password: sanderin, Substring is: sand
+Bad password: mashewer, Substring is: mash
+Bad password: rearithe, Substring is: rear
+Bad password: erthatwo, Substring is: that
+
 
 [Input of test 2]
 java Passwords reference-test_input.txt 1 8
@@ -53,7 +56,9 @@ java Passwords reference-test_input.txt 1 8
 [Output of test 2]
 
 Passwords are: 
-anuiroma
+
+1 Bad Passwords: 
+Bad password: bcerrend, Substring is: rend
 
 [Input of test 3]
 java Passwords reference-test_input.txt 0 8
@@ -68,3 +73,16 @@ java Passwords reference-test_input.txt 8 0
 [Output of test 4]
 
 How can I generate a password with length 0...or less?!  You cray cray.
+
+[Extra Credit]
+We did the second extra credit option which takes in the Linux /usr/share/dict/words dictionary, and also allows for the user to add in their own.
+The Linux dictionary is hard-coded into the program, so this path should exist when the program is run, or else the program will fail.  The user
+dictionary is optional.  When running the program, it must be the last parameter.
+
+The extra credit adds a LinkedHashSet which stores all the words from the dictionary and user input file.  The LinkedHashSet, hereby referred to as LHS,
+is a set, so it prevents any duplicate entries and also has a very fast lookup time due to its hashing nature.  When we create a password, we call the method
+parse_password and create substrings of size, 4 <= size <= len(password),  or greater and call LHS.contains on each substring.  The lookups are near constant
+time so this is not a major performance penalty.
+
+After we find a bad password, we write the String containing the bad password and the substring to an ArrayList called bad_password.  The purpose is to allow
+all the good passwords to be printed first, and then we print all the bad ones with the number of bad ones detected.
