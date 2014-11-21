@@ -2,11 +2,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class Passwords {
@@ -18,10 +21,14 @@ public class Passwords {
 	protected static int[] COUNTS;
 	protected static int total_num_letters;
 	protected static int num_starters;
+	protected static File dict;
 	protected static File f;
+	protected static boolean custom_file;
+	protected static LinkedHashSet<String> the_file;
 	
 	public static void main(String[] args) {
-		if(args.length != 4){
+		if(args.length == 4){ custom_file = true; } else{ custom_file = false;}
+		if(!custom_file && args.length != 3){
 			System.out.println("incorrect number of arguments. Please correct"); System.exit(-1);
 		}
 		Scanner sc = null;
@@ -32,9 +39,13 @@ public class Passwords {
 			STARTERS = new int[26];
 			COUNTS = new int[26];
 			letter_grid = new int[26][26];
-			f = new File(args[3]);
+			dict = Paths.get("/usr/share/dict/words").toFile();
+			the_file = new LinkedHashSet<String>();
+			if(custom_file)
+				f = new File(args[3]);
 		} catch (Exception e) {
 			System.out.println("An error occured, please try again.");
+			e.printStackTrace();
 			System.exit(-1);
 		}
 		
@@ -66,21 +77,16 @@ public class Passwords {
 		}
 		
 		
-		ArrayList<String> check_file = new ArrayList<String>();
-		Set<String> s = new TreeSet<String>();
-		
+		process_dict();
+	}
+
+	private static void process_dict() {
 		try {
-			Scanner testing = new Scanner(f);
-			int counter = 0;
+			Scanner testing = new Scanner(dict);
 			while(testing.hasNext()){
-				counter++;
-				s.add(testing.next().split("[^a-zA-Z ]")[0].toLowerCase());
+				the_file.add(testing.next().split("[^a-zA-Z ]")[0].toLowerCase());
 			}
-			Iterator<String> it = s.iterator();
-			while(it.hasNext())
-				System.out.println(it.next());
-			System.out.println("size: " + s.size());
-			System.out.println("count: " + counter);
+			testing.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("uh oh");
 		}
