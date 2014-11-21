@@ -1,11 +1,9 @@
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import org.ardverk.collection.PatriciaTrie;
 
 public class Passwords {
 
@@ -29,23 +27,22 @@ public class Passwords {
 			STARTERS = new int[26];
 			COUNTS = new int[26];
 			letter_grid = new int[26][26];
-		} catch (FileNotFoundException e) {
-			System.out.println("wasn't able to open the reference text");
-			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("An error occured, please try again.");
+			System.exit(-1);
 		}
 		
-		if(num_passwords == 0){ System.out.println("Enter a larger number for amount of passwords to generate."); System.exit(-1);}
-		
+		if(num_passwords <= 0){ System.out.println("Enter a larger number for amount of passwords to generate."); System.exit(-1);}
+		if(password_length <= 0){ System.out.println("How can I generate a password with length 0...or less?!  You cray cray."); System.exit(-1);}
 		parse_input(sc);
-//		print_array(letter_grid, false);
-//		Random t = new Random(9001);
-//		Random r = new Random(t.nextLong());
+		print_array(letter_grid, false);
 		Random r = new Random();
 		
 //		for(int i = 0; i < STARTERS.length; i++)
 //			System.out.println(STARTERS[i]);
 //		System.out.println(num_starters);
-		PatriciaTrie<K, V> test = new PatriciaTrie<K, V>();
+		
+		System.out.println("Passwords are: ");
 		while(num_passwords-- > 0){
 			ArrayList<Byte> password = new ArrayList<Byte>();
 			byte start_letter_index = get_letter(r, STARTERS, num_starters);
@@ -66,12 +63,7 @@ public class Passwords {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		
-		
-		
+	
 	}
 
 	private static byte get_letter(Random r, int[] array, int total_letters) {
@@ -111,7 +103,7 @@ public class Passwords {
 				if(hex)
 					System.out.print(Integer.toHexString(j) + " ");
 				else
-					System.out.format("%4s", j + " ");
+					System.out.format("%5s", j + " ");
 			}
 			System.out.println();
 		}
