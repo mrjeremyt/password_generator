@@ -38,10 +38,6 @@ public class Passwords {
 		print_array(letter_grid, false);
 		Random r = new Random();
 		
-//		for(int i = 0; i < STARTERS.length; i++)
-//			System.out.println(STARTERS[i]);
-//		System.out.println(num_starters);
-		
 		System.out.println("Passwords are: ");
 		while(num_passwords-- > 0){
 			ArrayList<Byte> password = new ArrayList<Byte>();
@@ -50,7 +46,6 @@ public class Passwords {
 			
 			for(int i = 0; i < (password_length - 1); i++){
 				password.add(new Integer(get_letter(r, letter_grid[password.get(i)], COUNTS[password.get(i)])).byteValue());
-//				System.out.println((password.get(i)));
 			}
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			for(Byte b : password){
@@ -63,7 +58,6 @@ public class Passwords {
 				e.printStackTrace();
 			}
 		}
-	
 	}
 
 	private static byte get_letter(Random r, int[] array, int total_letters) {
