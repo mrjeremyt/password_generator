@@ -1,9 +1,13 @@
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Passwords {
 
@@ -14,9 +18,10 @@ public class Passwords {
 	protected static int[] COUNTS;
 	protected static int total_num_letters;
 	protected static int num_starters;
+	protected static File f;
 	
 	public static void main(String[] args) {
-		if(args.length != 3){
+		if(args.length != 4){
 			System.out.println("incorrect number of arguments. Please correct"); System.exit(-1);
 		}
 		Scanner sc = null;
@@ -27,6 +32,7 @@ public class Passwords {
 			STARTERS = new int[26];
 			COUNTS = new int[26];
 			letter_grid = new int[26][26];
+			f = new File(args[3]);
 		} catch (Exception e) {
 			System.out.println("An error occured, please try again.");
 			System.exit(-1);
@@ -57,6 +63,26 @@ public class Passwords {
 				System.out.println("Something wicked this way comes.");
 				e.printStackTrace();
 			}
+		}
+		
+		
+		ArrayList<String> check_file = new ArrayList<String>();
+		Set<String> s = new TreeSet<String>();
+		
+		try {
+			Scanner testing = new Scanner(f);
+			int counter = 0;
+			while(testing.hasNext()){
+				counter++;
+				s.add(testing.next().split("[^a-zA-Z ]")[0].toLowerCase());
+			}
+			Iterator<String> it = s.iterator();
+			while(it.hasNext())
+				System.out.println(it.next());
+			System.out.println("size: " + s.size());
+			System.out.println("count: " + counter);
+		} catch (FileNotFoundException e) {
+			System.out.println("uh oh");
 		}
 	}
 
